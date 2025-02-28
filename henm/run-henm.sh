@@ -27,7 +27,7 @@ echo "Aligned trajectories, now running hENM refinement"
 cd ../run-fluc
 bash commands.dat
 
-cd ../lammps-input
+cd ../lammps/lammps-input
 python3 get_data.py lammpsdata.dat
 python3 get_bond_coeff.py lammpsbondcoeff.dat
 
