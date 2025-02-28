@@ -1,0 +1,46 @@
+# Ignore all files in henm/run-fluc except the specified ones
+henm/run-fluc/*
+!henm/run-fluc/bondfile
+!henm/run-fluc/cg1.xyz
+!henm/run-fluc/cgk.dat
+!henm/run-fluc/commands.dat
+!henm/run-fluc/enm_lammps.itp
+!henm/run-fluc/enm.itp
+!henm/run-fluc/fix_enmitp.py
+!henm/run-fluc/fluc-match-8f.py
+!henm/run-fluc/flucfile
+!henm/run-fluc/mass.dat
+# !lammps-input/lammpsbondcoeff.dat
+# !lammps-input/lammpsdata.dat
+
+# TODO: Check if following are necessary
+
+# Ignore temporary or intermediate files
+# !input-files/protein_initial_unaligned.gro
+# !input-files/protein_bb_unaligned_pbc_fixed.trr
+*.log
+*.mdp
+*.edr
+*.trr
+*.tpr
+*.dat
+*.gro
+*.top
+*.in
+*.mdout
+*.lock
+*.npz
+
+# Ignore compiled files
+*.o
+*.out
+*.so
+
+# Ignore Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Ignore hidden files and folders
+.DS_Store
+*.swp
