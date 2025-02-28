@@ -1,0 +1,5 @@
+python3 fluc-match-str-pdb.py ../input-files/structure_ave.pdb ../input-files/traj_sup.pdb ../input-files/ba.dat bondfile flucfile 200 1
+
+python3 fluc-match-8f.py bondfile flucfile 40 10000 0
+
+python3 fix_enmitp.py

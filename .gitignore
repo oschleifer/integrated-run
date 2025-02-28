@@ -23,7 +23,7 @@ henm/run-fluc/*
 *.edr
 *.trr
 *.tpr
-*.dat
+# *.dat
 *.gro
 *.top
 *.in
