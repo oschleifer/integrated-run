@@ -8,6 +8,7 @@ henm/run-fluc/*
 !henm/run-fluc/enm.itp
 !henm/run-fluc/fix_enmitp.py
 !henm/run-fluc/fluc-match-8f.py
+!henm/run-fluc/fluc-match-str-pdb.py
 !henm/run-fluc/flucfile
 !henm/run-fluc/mass.dat
 # !lammps-input/lammpsbondcoeff.dat
