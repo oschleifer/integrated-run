@@ -17,20 +17,20 @@ henm/run-fluc/*
 # TODO: Check if following are necessary
 
 # Ignore temporary or intermediate files
-# !input-files/protein_initial_unaligned.gro
-# !input-files/protein_bb_unaligned_pbc_fixed.trr
+!input-files/protein_initial_unaligned.gro
+!input-files/protein_bb_unaligned_pbc_fixed.trr
 *.log
 *.mdp
 *.edr
-*.trr
+# *.trr
 *.tpr
 # *.dat
-*.gro
+# *.gro
 *.top
 *.in
 *.mdout
-*.lock
-*.npz
+# *.lock
+# *.npz
 
 # Ignore compiled files
 *.o
