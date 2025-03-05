@@ -11,7 +11,7 @@ source $MUMMI_APP/setup/setup.env.sh
 echo "Setup environment complete."
 
 echo "Loading GROMACS..."
-spack load gromacs~mummi-c2
+spack load gromacs@2024.1.gpu
 echo "Loaded GROMACS"
 which gmx
 
