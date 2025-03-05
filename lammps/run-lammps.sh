@@ -1,14 +1,14 @@
-# copy henm output to new folder to use instead of mummi-resources/ucg/*
-cp $MUMMI_RESOURCES/ucg/lammps.in
-
 # source spack & load lammps
-source /usr/workspace/mummiusr/mummi-spack/spack/0.19/share/spack/setup-env.sh
+source /usr/workspace/mummiusr/mummi-spack/spack/0.21/share/spack/setup-env.sh
 spack load lammps arch=$(spack arch)
 command -v lmp
 
 # source mummi
 source ~/.mummi/config.mummi.sh
 env | grep MUMMI
+
+# copy henm output to new folder to use instead of mummi-resources/ucg/*
+cp $MUMMI_RESOURCES/ucg/lammps.in
 
 # create and run job
 lalloc 2 -W 30
