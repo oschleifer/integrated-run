@@ -1,19 +1,17 @@
 [build-system]
-requires = ["setuptools", "wheel"]
+requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "integrated-run"
+name = "integrated_run"
 version = "0.1.0"
 description = "Integration of GROMACS, henm, and LAMMPS for MuMMI"
 readme = "README.md"
 requires-python = ">=3.6"
 authors = [{name = "LLNL HMC Clinic 2024-25", email = "llnl24l@cs.hmc.edu"}]
 dependencies = [
-    "numpy>=1.20.2",
-    "pip>=21.2.4", 
-    "requests"
+    "numpy>=1.20.2"
 ]
 
 [tool.setuptools]
-packages = ["integrated-run"]
+packages = ["integrated_run"]

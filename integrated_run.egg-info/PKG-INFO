@@ -1,0 +1,11 @@
+Metadata-Version: 2.2
+Name: integrated_run
+Version: 0.1.0
+Summary: Integration of GROMACS, henm, and LAMMPS for MuMMI
+Author-email: LLNL HMC Clinic 2024-25 <llnl24l@cs.hmc.edu>
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown
+Requires-Dist: numpy>=1.20.2
+
+# integrated-run
+automatic run of ultra coarse-grained molecular dynamics
