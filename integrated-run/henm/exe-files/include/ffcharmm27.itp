@@ -1,0 +1,8 @@
+#define _FF_CHARMM
+
+[ defaults ]
+; nbfunc   combrule   gen-pairs   fudgeLJ   fudgeQQ
+1   2   yes    1.0    1.0
+
+#include "/scratch/dea/henm/LATA/GDPA/block1/ffcharmm27nb.itp"
+#include "/scratch/dea/henm/LATA/GDPA/block1/ffcharmm27bon.itp
