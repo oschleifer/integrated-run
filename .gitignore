@@ -22,15 +22,15 @@ henm/run-fluc/*
 *.log
 *.mdp
 *.edr
-# *.trr
+*.trr
 *.tpr
-# *.dat
-# *.gro
+*.dat
+*.gro
 *.top
 *.in
 *.mdout
-# *.lock
-# *.npz
+*.lock
+*.npz
 
 # Ignore compiled files
 *.o
