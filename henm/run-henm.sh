@@ -4,7 +4,7 @@ source ~/.mummi/config.mummi.sh
 
 env | grep MUMMI
 
-source /usr/WS1/mummiusr/mummi-spack/spack/0.21/share/spack/setup-env.sh
+source /usr/WS1/mummiusr/mummi-spack-temp/spack/0.21/share/spack/setup-env.sh
 
 source $MUMMI_APP/setup/setup.env.sh
 
