@@ -10,7 +10,7 @@ fout = open(sys.argv[1],'w')
 #print ffs,lfs
 #fframe = int(ffs)
 #lframe = int(lfs)
-flist = glob.glob('../run-py/cgk.dat')
+flist = glob.glob('../henm/run-fluc/cgk.dat')
 #fout.write('#dist-avg\dist-std\n')
 
 cgsites = 40

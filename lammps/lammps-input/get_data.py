@@ -11,7 +11,7 @@ fout = open(sys.argv[1],'w')
 #print ffs,lfs
 #fframe = int(ffs)
 #lframe = int(lfs)
-flist = glob.glob('../run-py/mass.dat')
+flist = glob.glob('../henm/run-fluc/mass.dat')
 
 
 cgsites = 40
