@@ -10,10 +10,10 @@ cDir="gromacs"
 
 # bash ../run_four_gmx_jobs.sh
 # Simulation subdirectories -- rename them based on your folders
-sim1Dir = "sim_1"
-sim2Dir = "sim_2"
-sim3Dir = "sim_3"
-sim4Dir = "sim_4"
+sim1Dir="sim_1"
+sim2Dir="sim_2"
+sim3Dir="sim_3"
+sim4Dir="sim_4"
 
 # Runs 4 simulations of GROMACS
 ## Calls the run_gmx script
