@@ -1,2 +1,15 @@
-gmx sims
-lammps input
+# location of struct and traj files for each simulation
+
+simulations:
+  sim_1:
+    structure_file: "../gromacs/sim_1/.gro"
+    trajectory_file: "../gromacs/sim_1/.xtc"
+  sim_2:
+    structure_file: "../gromacs/sim_2/.gro"
+    trajectory_file: "../gromacs/sim_2/.xtc"
+  sim_3:
+    structure_file: "../gromacs/sim_4/.gro"
+    trajectory_file: "../gromacs/sim_3/.xtc"
+  sim_4:
+    structure_file: "../gromacs/sim_4/.gro"
+    trajectory_file: "../gromacs/sim_4/.xtc"
