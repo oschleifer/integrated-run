@@ -20,7 +20,7 @@ henm/run-fluc/*
 !input-files/protein_initial_unaligned.gro
 !input-files/protein_bb_unaligned_pbc_fixed.trr
 *.log
-# *.mdp
+*.mdp
 *.edr
 *.trr
 *.tpr
