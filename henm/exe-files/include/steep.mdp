@@ -1,0 +1,32 @@
+;
+;	File 'sims/mdpout.mdp' was generated
+;	By user: u0658347 (730944)
+;	On host: telluride4
+;	At date: Mon Apr  6 13:57:57 2009
+;
+
+; VARIOUS PREPROCESSING OPTIONS
+; Preprocessor information: use cpp syntax.
+; e.g.: -I/home/joe/doe -I/home/mary/hoe
+include                  = 
+; e.g.: -DI_Want_Cookies -DMe_Too
+;define                   = -DPOSRES
+dt = 0.002
+nsteps = 1000
+
+; RUN CONTROL PARAMETERS
+integrator               = steep
+
+; ENERGY MINIMIZATION OPTIONS
+; Force tolerance and initial step-size
+emtol                    = 0.001
+emstep                   = 0.01
+
+
+; NEIGHBORSEARCHING PARAMETERS
+nstlist                  = 100 
+;ns_type                  = simple
+pbc                      = xyz
+rlist                    = 0.2 
+
+constraints              = none
