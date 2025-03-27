@@ -11,6 +11,7 @@ henm/run-fluc/*
 !henm/run-fluc/fluc-match-str-pdb.py
 !henm/run-fluc/flucfile
 !henm/run-fluc/mass.dat
+!henm/run-flux/exe-files/include/steep.mdp
 # !lammps-input/lammpsbondcoeff.dat
 # !lammps-input/lammpsdata.dat
 

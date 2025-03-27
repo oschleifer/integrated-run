@@ -225,7 +225,7 @@ while converge_flag < 0 and iter <= max_iter:
         kbmax[i] = 0
         maxb[i] = 0
 
-    print(f"{len(bbond)=}")
+    # print(f"{len(bbond)=}")
     for ibond in range(totalbonds):
         bbond[ibond] = 0
 

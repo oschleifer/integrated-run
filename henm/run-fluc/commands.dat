@@ -2,4 +2,4 @@ python3 fluc-match-str-pdb.py ../input-files/structure_ave.pdb ../input-files/tr
 
 python3 fluc-match-8f.py bondfile flucfile 40 10000 0
 
-python3 fix_enmitp.py
+# python3 fix_enmitp.py
