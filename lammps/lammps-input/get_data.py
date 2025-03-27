@@ -11,7 +11,7 @@ fout = open(sys.argv[1],'w')
 #print ffs,lfs
 #fframe = int(ffs)
 #lframe = int(lfs)
-flist = glob.glob('../run-py/mass.dat')
+flist = glob.glob('../henm/run-fluc/mass.dat')
 
 
 cgsites = 40
@@ -59,7 +59,7 @@ fout.write('%s\n' % ("Atoms"))
 fout.write('%s\n' % (" "))
                 
                 
-f4list = glob.glob('../run-py/cg1.xyz')
+f4list = glob.glob('../henm/run-fluc/cg1.xyz')
                 
 for fname in f4list:
        a4 = np.loadtxt(fname,skiprows=2,usecols=(1,2,3))
@@ -75,7 +75,7 @@ fout.write('%s\n' % ("Bonds"))
 
 fout.write('%s\n' % (" "))
 
-f5list = glob.glob('../run-py/cgk.dat')
+f5list = glob.glob('../henm/run-fluc/cgk.dat')
 
 
 for fname in f5list:

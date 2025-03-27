@@ -1,56 +1,69 @@
 import MDAnalysis as mda
 import MDAnalysis.transformations as trans
 from MDAnalysis.transformations.positionaveraging import PositionAverager
+import sys
+import yaml
 
-# Load in the reference structure
-ref_structure = "../input-files/protein_initial_unaligned.gro"
-ref = mda.Universe(ref_structure)
-atoms_ref_kras_bb = ref.select_atoms("name BB")
+def load_config(config_path="../henm-config.yaml"):
+    with open(config_path, "r") as file:
+        return yaml.safe_load(file)
 
-# Load in the trajectory
-traj_file = "../input-files/protein_bb_unaligned_pbc_fixed.trr"
-mobile = mda.Universe(ref_structure, traj_file, in_memory=True)
-atoms_mobile_kras_bb = mobile.select_atoms("name BB")
+def alignMDA(ref_structure, traj_file):
+    # Load in the reference structure
+    # ref_structure = "../input-files/protein_initial_unaligned.gro"
+    ref = mda.Universe(ref_structure)
+    atoms_ref_kras_bb = ref.select_atoms("name BB")
 
-# Transforms:
-# 1) Center on KRAS CYF B
-# 2) translate up in z axes 
-# 3) wrap all particles into the box 
+    # Load in the trajectory
+    # traj_file = "../input-files/protein_bb_unaligned_pbc_fixed.trr"
+    mobile = mda.Universe(ref_structure, traj_file, in_memory=True)
+    atoms_mobile_kras_bb = mobile.select_atoms("name BB")
 
-# TODO: what's the best residue to center on
-atoms_mobile_kras_CYF_bb  = mobile.select_atoms("index 250")
-transforms = [trans.center_in_box(atoms_mobile_kras_CYF_bb),
-              trans.translate([0,0,40]),
-              trans.wrap(mobile.atoms)]
-mobile.trajectory.add_transformations(*transforms)
+    # Transforms:
+    # 1) Center on KRAS CYF B
+    # 2) translate up in z axes 
+    # 3) wrap all particles into the box 
 
-NUMMDL = len(mobile.trajectory)
+    # TODO: what's the best residue to center on
+    atoms_mobile_kras_CYF_bb  = mobile.select_atoms("index 250")
+    transforms = [trans.center_in_box(atoms_mobile_kras_CYF_bb),
+                trans.translate([0,0,40]),
+                trans.wrap(mobile.atoms)]
+    mobile.trajectory.add_transformations(*transforms)
 
-# Alignment:
-aligner = mda.analysis.align.AlignTraj(mobile, ref, select="name BB", in_memory=True).run()
+    NUMMDL = len(mobile.trajectory)
 
-with mda.Writer("../input-files/mda_traj_sup.pdb", mobile.atoms.n_atoms) as writer:
-    for ts in mobile.trajectory:
-        writer.write(mobile)
+    # Alignment:
+    aligner = mda.analysis.align.AlignTraj(mobile, ref, select="name BB", in_memory=True).run()
 
-# Step 2: Open the file, read its contents, and prepend the custom header
-with open("../input-files/mda_traj_sup.pdb", "r+") as pdb_file:
-    content = pdb_file.read()
-    pdb_file.seek(0, 0)
-    pdb_file.write(f"NUMMDL   {NUMMDL}\n" + content)
+    with mda.Writer("../input-files/mda_traj_sup.pdb", mobile.atoms.n_atoms) as writer:
+        for ts in mobile.trajectory:
+            writer.write(mobile)
 
-# Compute average structure across all frames
+    # Step 2: Open the file, read its contents, and prepend the custom header
+    with open("../input-files/mda_traj_sup.pdb", "r+") as pdb_file:
+        content = pdb_file.read()
+        pdb_file.seek(0, 0)
+        pdb_file.write(f"NUMMDL   {NUMMDL}\n" + content)
 
-aligned_traj_file = "../input-files/mda_traj_sup.pdb"
-mobile_aligned = mda.Universe(aligned_traj_file)
+    # Compute average structure across all frames
 
-transformation = PositionAverager(NUMMDL, check_reset=True)
-mobile_aligned.trajectory.add_transformations(transformation)
+    aligned_traj_file = "../input-files/mda_traj_sup.pdb"
+    mobile_aligned = mda.Universe(aligned_traj_file)
 
-for ts in mobile_aligned.trajectory:
-    # applies transformation across all frames
-    pass
+    transformation = PositionAverager(NUMMDL, check_reset=True)
+    mobile_aligned.trajectory.add_transformations(transformation)
 
-with mda.Writer("../input-files/mda_structure_ave.pdb", mobile_aligned.atoms.n_atoms) as writer:
-    writer.write(mobile_aligned.atoms)
+    for ts in mobile_aligned.trajectory:
+        # applies transformation across all frames
+        pass
 
+    with mda.Writer("../input-files/mda_structure_ave.pdb", mobile_aligned.atoms.n_atoms) as writer:
+        writer.write(mobile_aligned.atoms)
+
+if __name__ == "__main__":
+    config = load_config()
+    
+    for sim_name, sim_data in config["simulations"].items():
+        print(f"Running alignment for {sim_name}")
+        alignMDA(sim_data["structure_file"], sim_data["trajectory_file"])
