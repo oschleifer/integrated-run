@@ -167,7 +167,8 @@ while converge_flag < 0 and iter <= max_iter:
     # Run GROMACS for energy minimization
     print("running gromacs for energy minimization")
     subprocess.call("gmx grompp -f steep.mdp -p enm -c enm >& gr.log", shell=True)
-    subprocess.call("gmx mdrun -ntmpi 1 -ntomp $OMP_NUM_THREADS >& md.log", shell=True)
+    # change this -ntomp $OMP_NUM_THREADS to -ntomp 1
+    subprocess.call("gmx mdrun -ntmpi 1 -ntomp 1 >& md.log", shell=True)
 
     # Write XYZ structure file
     with open("cg.xyz", "w") as GRO:

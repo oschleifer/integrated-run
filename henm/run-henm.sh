@@ -1,38 +1,66 @@
+#!/bin/bash
+
+# Default value
+NUMFILES=0
+
+# Parse arguments
+while [[ "$#" -gt 0 ]]; do
+    case $1 in
+        --numfiles) NUMFILES="$2"; shift ;;
+        *) echo "Unknown parameter passed: $1"; exit 1 ;;
+    esac
+    shift
+done
+
+if [[ $NUMFILES -le 0 ]]; then
+    echo "Usage: $0 --numfiles <number_of_trajectories>"
+    exit 1
+fi
+
 echo "Starting job"
 
-# source ~/.mummi/config.mummi.sh
-
-# env | grep MUMMI
-
+# Setting up environment for Lassen
+env | grep MUMMI
 source /usr/workspace/mummiusr/mummi-spack/spack/0.21/share/spack/setup-env.sh
-
-# source $MUMMI_APP/setup/setup.env.sh
-
 echo "Setup environment complete."
 
 echo "Loading GROMACS..."
 spack load /nxpxh42
 echo "Loaded GROMACS"
 command -v gmx
-
 export OMP_NUM_THREADS=8
 
+# Aligning trajectories
 echo "Aligning trajectories..."
 
 cd run-align
-python3 align-mda.py > mda.log 2>&1 
+for ((i=1; i<=NUMFILES; i++)); do
+    python3 align-mda.py \
+        --struc ../../gromacs/sim_${i}/confout.gro \
+        --traj ../../gromacs/sim_${i}/traj_comp.xtc \
+        --out1 traj_sup_${i}.pdb \
+        --out2 struc_ave_${i}.pdb
+done
 
-echo "Aligned trajectories, now running hENM refinement"
-
+# Running hENM refinement
 cd ../run-fluc
-bash commands.dat
+for ((i=1; i<=NUMFILES; i++)); do
+    bash commands.dat \
+        --in1 ../run-align/traj_sup_${i}.pdb \
+        --in2 ../run-align/struc_ave_${i}.pdb \
+        --out1 ../output/mass_${i}.dat \
+        --out2 ../output/cgk_${i}.dat
+done
 
+# Averaging results
+cd ../output
+python3 average.py "$NUMFILES"
+
+# Optionally generate LAMMPS input
 # cd ../../lammps/lammps-input
 # python3 get_data.py lammpsdata.dat
 # python3 get_bond_coeff.py lammpsbondcoeff.dat
 
 echo "Done"
-
 deactivate
-
 echo "Finished"
