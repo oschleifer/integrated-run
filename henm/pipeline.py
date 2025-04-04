@@ -1,4 +1,5 @@
 import os
+import argparse
 from henm.align import alignMDA
 from henm.estimate import estimate
 from henm.average import average_results
@@ -15,17 +16,17 @@ def run_pipeline(gro_trr_pairs, output_dir):
         output_dir (str): Where to store outputs
     """
     os.makedirs(output_dir, exist_ok=True)
-    
+
     aligned_structs = []
     aligned_trajs = []
 
     for i, (gro_path, trr_path) in enumerate(gro_trr_pairs, 1):
         struc_out = os.path.abspath(os.path.join(output_dir, f"struc_ave_{i}.pdb"))
         traj_out = os.path.abspath(os.path.join(output_dir, f"traj_sup_{i}.pdb"))
-        
+
         print(f"[{i}] Aligning {gro_path} and {trr_path}")
         alignMDA(gro_path, trr_path, struc_out, traj_out)
-            
+
         aligned_structs.append(struc_out)
         aligned_trajs.append(traj_out)
 
@@ -36,3 +37,41 @@ def run_pipeline(gro_trr_pairs, output_dir):
     print(f"Averaging results across {len(gro_trr_pairs)} runs...")
     average_results(output_dir, len(gro_trr_pairs))
     print("Done.")
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Run full UCG parameter pipeline.")
+    parser.add_argument(
+        "--inputs",
+        nargs="+",
+        required=True,
+        help="List of input files as GRO/TRR pairs: gro1 trr1 gro2 trr2 ..."
+    )
+    parser.add_argument(
+        "--out",
+        required=True,
+        help="Directory to write output files"
+    )
+
+    args = parser.parse_args()
+
+    if len(args.inputs) % 2 != 0:
+        raise ValueError("Input files must be provided in GRO/TRR pairs.")
+
+    gro_trr_pairs = [
+        (args.inputs[i], args.inputs[i + 1])
+        for i in range(0, len(args.inputs), 2)
+    ]
+
+    run_pipeline(gro_trr_pairs, args.out)
+    
+    # Example usage:
+    # python -m henm.pipeline \
+    #   --inputs run1.gro run1.trr run2.gro run2.trr \
+    #   --out output/
+
+# python -m henm.pipeline \
+#     --inputs input/example_1.gro input/example_1.trr \
+#              input/example_2.gro input/example_2.trr \
+#              input/example_3.gro input/example_3.trr \
+#              input/example_4.gro input/example_4.trr \
+#     --out output/

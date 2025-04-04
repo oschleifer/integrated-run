@@ -19,5 +19,6 @@ __pycache__/
 *.pyo
 
 # Ignore hidden files and folders
+*egg-info/
 .DS_Store
 *.swp

@@ -1,0 +1,3 @@
+recursive-include henm/input_files *
+recursive-include henm/fluc_scripts *.py
+recursive-include henm/bin *
