@@ -5,7 +5,7 @@ import os
 import math
 
 # INPUT PARSING
-path_to_amino_acid_masses = "../input-files"
+path_to_amino_acid_masses = "."
 
 if len(sys.argv) != 8:
     raise SystemExit("usage: average.pdb trj.pdb ba.dat bondfile flucfile cutoff_distance k_initial")
@@ -53,6 +53,8 @@ print(f"found {numcgsites} CG sites")
 # read sequence info from the PDB and assign masses to CG sites
 resmass = {}
 linecount = 0
+
+print("CWD:", os.getcwd())
 
 with open(PDB) as f:
     for line in f:

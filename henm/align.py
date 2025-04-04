@@ -9,7 +9,7 @@ def fix_residues_and_chain(universe):
         if len(res.resname) > 3:
             res.resname = res.resname[:3]
 
-def alignMDA(ref_structure, traj_file, output_traj, output_ave, stride=50):
+def alignMDA(ref_structure, traj_file, output_ave, output_traj, stride=50):
     # Load reference and trajectory
     ref = mda.Universe(ref_structure)
     atoms_ref_kras_bb = ref.select_atoms("name BB")
@@ -85,5 +85,5 @@ def main():
     args = parser.parse_args()
     alignMDA(args.struc, args.traj, args.out1, args.out2, stride=args.stride)
 
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     main()

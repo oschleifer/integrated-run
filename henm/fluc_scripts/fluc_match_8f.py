@@ -7,11 +7,9 @@ import math
 import glob
 
 # paths to files used
-include_path = "../input-files/include"
-exe_path = "../exe-files"
+PACKAGE_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+exe_path = os.path.join(PACKAGE_ROOT, "bin")
 
-# copying the files from the "include" directory
-subprocess.call(f"cp {include_path}/* .", shell=True)
 # restoring the original "cg.xyz" file
 subprocess.call("cp cg1.xyz cg.xyz", shell=True)
 
@@ -142,7 +140,6 @@ with open("ffcharmm27.itp", "w") as grxff:
 
 # call the program for preparation of some gromacs input files
 subprocess.call(f"{exe_path}/mkgromax -imw mass.dat -ipr gro.in -iat cg.xyz -ibo {kinitialfile} -opr enm.itp -otp enm.top -ocr enm.gro -oat enm.atp", shell=True)
-
 
 # prepare the input file for hetero-enm
 with open("heteroenm.in", "w") as henin:
