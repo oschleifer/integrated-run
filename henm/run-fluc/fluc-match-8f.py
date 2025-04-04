@@ -7,7 +7,7 @@ import math
 import glob
 
 # paths to files used
-include_path = "../exe-files/include"
+include_path = "../input-files/include"
 exe_path = "../exe-files"
 
 # copying the files from the "include" directory

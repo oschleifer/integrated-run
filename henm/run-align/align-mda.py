@@ -3,6 +3,12 @@ import MDAnalysis.transformations as trans
 from MDAnalysis.transformations.positionaveraging import PositionAverager
 import argparse
 
+def fix_residues_and_chain(universe):
+    for res in universe.residues:
+        # Truncate residue names to max 3 characters (PDB standard)
+        if len(res.resname) > 3:
+            res.resname = res.resname[:3]
+
 def alignMDA(ref_structure, traj_file, output_traj, output_ave, stride=50):
     # Load reference and trajectory
     ref = mda.Universe(ref_structure)
@@ -27,6 +33,7 @@ def alignMDA(ref_structure, traj_file, output_traj, output_ave, stride=50):
     selected_frames = list(range(0, len(mobile.trajectory), stride))
     NUMMDL = len(selected_frames)
 
+    fix_residues_and_chain(mobile)
     with mda.Writer(output_traj, mobile.atoms.n_atoms) as writer:
         for i, ts in enumerate(mobile.trajectory):
             if i in selected_frames:
@@ -46,6 +53,7 @@ def alignMDA(ref_structure, traj_file, output_traj, output_ave, stride=50):
     for _ in mobile_aligned.trajectory:
         pass
 
+    fix_residues_and_chain(mobile_aligned)
     with mda.Writer(output_ave, mobile_aligned.atoms.n_atoms) as writer:
         writer.write(mobile_aligned.atoms)
 
