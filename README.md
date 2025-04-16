@@ -14,6 +14,16 @@ python -m henm.pipeline \
              input/example_3.gro input/example_3.trr \
              input/example_4.gro input/example_4.trr \
     --out output/
+   --lammps lammps/
+```
+
+If processing a larger number of files, read in the paired structure and trajectory files as a csv.
+
+```
+python -m henm.pipeline \
+--infile input/martinifiles.csv \
+--out output/
+--lammps lammps/
 ```
 
 If you are running this on a new system, please first run:
