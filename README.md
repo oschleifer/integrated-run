@@ -15,3 +15,10 @@ python -m henm.pipeline \
              input/example_4.gro input/example_4.trr \
     --out output/
 ```
+
+If you are running this on a new system, please first run:
+```
+cd henm/bin/exe-files
+gcc -o hetero-enm hetero-enm-src/heteroenm.c hetero-enm-src/smalloc.c -llapack -lblas -lm
+gcc -o mkgromax mkgromax-src/mkgromax.c mkgromax-src/smalloc.c
+```
