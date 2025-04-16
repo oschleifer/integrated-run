@@ -7,10 +7,10 @@ command -v lmp
 source ~/.mummi/config.mummi.sh
 env | grep MUMMI
 
-# copy henm output to new folder to use instead of mummi-resources/ucg/*
-cp $MUMMI_RESOURCES/ucg/lammps.in
+# original location of lammps input files: $MUMMI_RESOURCES/ucg
 
 # create and run job
+cd ucg
 lalloc 2 -W 30
 export OMP_NUM_THREADS=8
 jsrun -n1 -c1 lmp -v seed 1 -in lammps.in &

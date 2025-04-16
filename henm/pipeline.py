@@ -3,8 +3,28 @@ import argparse
 from henm.align import alignMDA
 from henm.estimate import estimate
 from henm.average import average_results
+from henm.write import write_lammps_files
 
-def run_pipeline(gro_trr_pairs, output_dir):
+def parse_infile(infile_path):
+    """
+    Parse a tab-separated file containing GRO/TRR pairs.
+
+    Args:
+        infile_path (str): Path to the input file.
+
+    Returns:
+        list of tuples: List of (gro_path, trr_path) pairs.
+    """
+    gro_trr_pairs = []
+    with open(infile_path, 'r') as infile:
+        for line in infile:
+            parts = line.strip().split(',')
+            if len(parts) != 2:
+                raise ValueError(f"Invalid line in infile: {line.strip()}")
+            gro_trr_pairs.append((parts[0], parts[1]))
+    return gro_trr_pairs
+
+def run_pipeline(gro_trr_pairs, output_dir, lammps_dir):
     """
     Run the full UCG parameter pipeline:
     1. Align trajectories
@@ -36,6 +56,10 @@ def run_pipeline(gro_trr_pairs, output_dir):
 
     print(f"Averaging results across {len(gro_trr_pairs)} runs...")
     average_results(output_dir, len(gro_trr_pairs))
+    
+    print(f"Writing new LAMMPS files to {lammps_dir}...")
+    write_lammps_files(output_dir, lammps_dir)
+    
     print("Done.")
 
 if __name__ == "__main__":
@@ -43,35 +67,49 @@ if __name__ == "__main__":
     parser.add_argument(
         "--inputs",
         nargs="+",
-        required=True,
         help="List of input files as GRO/TRR pairs: gro1 trr1 gro2 trr2 ..."
+    )
+    parser.add_argument(
+        "--infile",
+        help="Path to a tab-separated file containing GRO/TRR pairs."
     )
     parser.add_argument(
         "--out",
         required=True,
-        help="Directory to write output files"
+        help="Directory to write output files (cgk.dat and mass.dat)"
+    )
+    parser.add_argument(
+        "--lammps",
+        required=True,
+        help="Directory to write new files for LAMMPS simulation software"
     )
 
     args = parser.parse_args()
 
-    if len(args.inputs) % 2 != 0:
-        raise ValueError("Input files must be provided in GRO/TRR pairs.")
+    if args.inputs and args.infile:
+        raise ValueError("You cannot specify both --inputs and --infile. Choose one.")
 
-    gro_trr_pairs = [
-        (args.inputs[i], args.inputs[i + 1])
-        for i in range(0, len(args.inputs), 2)
-    ]
+    if args.infile:
+        gro_trr_pairs = parse_infile(args.infile)
+    elif args.inputs:
+        if len(args.inputs) % 2 != 0:
+            raise ValueError("Input files must be provided in GRO/TRR pairs.")
+        gro_trr_pairs = [
+            (args.inputs[i], args.inputs[i + 1])
+            for i in range(0, len(args.inputs), 2)
+        ]
+    else:
+        raise ValueError("You must specify either --inputs or --infile.")
 
-    run_pipeline(gro_trr_pairs, args.out)
-    
-    # Example usage:
-    # python -m henm.pipeline \
-    #   --inputs run1.gro run1.trr run2.gro run2.trr \
-    #   --out output/
+    run_pipeline(gro_trr_pairs, args.out, args.lammps)
 
 # python -m henm.pipeline \
-#     --inputs input/example_1.gro input/example_1.trr \
-#              input/example_2.gro input/example_2.trr \
-#              input/example_3.gro input/example_3.trr \
-#              input/example_4.gro input/example_4.trr \
+#     --infile input/martinifiles.txt \
 #     --out output/
+
+"""
+python -m henm.pipeline \
+--infile input/martinifiles.txt \
+--out output/
+--lammps lammps/
+"""

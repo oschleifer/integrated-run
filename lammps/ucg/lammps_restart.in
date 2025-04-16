@@ -1,0 +1,112 @@
+# Lammps Input File Created for CG runs
+variable        output_freq string 10
+#variable        lammpsdata
+# Seed for that simulation: use it with lmp -v seed $RANDOM -in lammps.in
+variable seed index 10
+variable rand_int equal ceil(random(1,1000000,${seed}))
+
+units           real
+atom_style      molecular
+
+#package gpu force 0 0 1
+bond_style      hybrid harmonic morse
+angle_style     none
+dihedral_style  none
+improper_style  none
+
+boundary        f f f
+#boundary        p p p
+
+read_restart       ucg.restart1.iter1
+#read_restart       ucg.restart2.iter1
+
+#read_data       lammpsdata.dat 
+include		lammpsbondcoeff_protein.dat
+
+variable z_hi internal 0.0
+
+#group site1 id 1
+#group site2 id 2
+#group site3 id 3
+#group site4 id 4
+#group site5 id 5
+#group site6 id 6
+#group site7 id 7
+group site8 id 8
+#group site9 id 9
+#group site10 id 10
+#group site11 id 11
+#group site12 id 12
+#group site13 id 13
+#group site14 id 14
+#group site15 id 15
+#group site16 id 16
+#group site17 id 17
+#group site18 id 18
+#group site19 id 19
+#group site20 id 20
+
+
+
+fix wall_z8 site8  wall/morse zhi ${z_hi} 0.006933869822  0.325000000000  13.651700000000 60.0 units box
+#fix wall_z20 site20  wall/morse zhi ${z_hi} 0.021021017751  0.325000000000  2.476800000000 60.0 units box
+
+
+#group site21 id 21 
+#group site22 id 22
+#group site23 id 23
+group site24 id 24
+#group site25 id 25
+#group site26 id 26
+#group site27 id 27
+#group site28 id 28
+#group site29 id 29
+#group site30 id 30
+#group site31 id 31
+#group site32 id 32
+#group site33 id 33
+#group site34 id 34
+#group site35 id 35
+#group site36 id 36
+#group site37 id 37
+#group site38 id 38
+#group site39 id 39
+#group site40 id 40
+
+
+
+fix wall_z24 site24  wall/morse zhi ${z_hi} 0.000661727811  0.325000000000  54.758900000000 60.0 units box
+
+
+group fixed_ucg id 20
+
+
+#velocity all create 310.0 4928459 rot yes dist gaussian
+
+#neighbor        20.0 bin
+#neigh_modify    every 1 delay 0 check no
+
+#fix zwalls all wall/reflect zhi 14.0 units box 
+
+thermo_style    custom step temp etotal pe ecoul evdwl ebond eangle lx ly lz press
+thermo          100000
+
+restart     500000  ucg.restart1.iter1 ucg.restart2.iter1
+
+#minimize 1e-12 1.0e-10 1000 10000
+
+dump            2 all xyz 100000 ucg.traj.xyz
+dump_modify     2 sort id
+
+timestep 30.0
+fix cg_langevin all langevin 310.0 310.0 1500.0 ${rand_int}
+fix cg_nve all nve
+
+
+fix tether1 fixed_ucg spring/self 1.0
+
+
+run 1000000000
+
+unfix cg_langevin
+unfix cg_nve

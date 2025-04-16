@@ -44,6 +44,7 @@ def estimate(struc_ave_pdb, traj_sup_pdb, output_dir, run_id):
         # Copy mass.dat and cgk.dat to output_dir with run-specific names
         shutil.move(os.path.join(tmp_dir, "mass.dat"), os.path.join(output_dir, f"mass_{run_id}.dat"))
         shutil.move(os.path.join(tmp_dir, "cgk.dat"), os.path.join(output_dir, f"cgk_{run_id}.dat"))
+        shutil.move(os.path.join(tmp_dir, "cg1.xyz"), os.path.join(output_dir, f"cg1_{run_id}.xyz"))
 
     finally:
         # Optional: clean up tmp_dir
