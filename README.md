@@ -28,7 +28,7 @@ python -m henm.pipeline \
 
 If you are running this on a new system, please first run:
 ```
-cd henm/bin/exe-files
+cd henm/exe-files
 gcc -o hetero-enm hetero-enm-src/heteroenm.c hetero-enm-src/smalloc.c -llapack -lblas -lm
 gcc -o mkgromax mkgromax-src/mkgromax.c mkgromax-src/smalloc.c
 ```
