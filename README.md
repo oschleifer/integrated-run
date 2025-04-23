@@ -50,6 +50,13 @@ source ~/.mummi/config.mummi.sh
 # may need to delete your outdated environment and reinstall everything
 rm -rf $MUMMI_ROOT/$MUMMI_VENV
 source $MUMMI_APP/setup/setup.env.sh
+
+# Load GROMACS and set evironment variables
+spack load /nxpxh42
+echo "Loaded GROMACS"
+command -v gmx
+
+# installing in editable mode (-e) doesn't work on Lassen
 pip install .
 
 # try to run stuff (replace with actual filepaths)
