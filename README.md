@@ -60,5 +60,7 @@ command -v gmx
 pip install .
 
 # try to run stuff (replace with actual filepaths)
-python -m henm.pipeline --infile input/martinifiles.csv --out output/ --lammps lammps/
+python -m henm.pipeline --inputs input/example_1.gro input/example_1.trr \
+                        --out output/ \
+                        --lammps lammps/
 ```
