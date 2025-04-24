@@ -7,10 +7,14 @@
 #BSUB -W 10                            # Wall-clock time (10 minutes)
 #BSUB -q pdebug                        # Use debug queue
 
-# Launch the job!
-# bash integrated-run.sh
 
-echo "Test job running on $(hostname)" && sleep 10
+# Launch the job!
+bash integrated-run.sh
+
+# test command: 
+# echo "Test job running on $(hostname)" && sleep 10
 
 
 # how you run it: bsub < integrated-run.lsf
+
+# check status of the job: bjobs -X
