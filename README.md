@@ -45,7 +45,7 @@ gcc -o hetero-enm hetero-enm-src/heteroenm.c hetero-enm-src/smalloc.c -llapack -
 gcc -o mkgromax mkgromax-src/mkgromax.c mkgromax-src/smalloc.c
 
 # setup MuMMI Spack environment
-cd ..
+cd ../..
 source ~/.mummi/config.mummi.sh
 # may need to delete your outdated environment and reinstall everything
 rm -rf $MUMMI_ROOT/$MUMMI_VENV
