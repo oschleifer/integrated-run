@@ -24,7 +24,7 @@ def parse_infile(infile_path):
             gro_trr_pairs.append((parts[0], parts[1]))
     return gro_trr_pairs
 
-def run_pipeline(gro_trr_pairs, output_dir, lammps_dir):
+def run_pipeline(gro_trr_pairs, output_dir, lammps_dir, stride):
     """
     Run the full UCG parameter pipeline:
     1. Align trajectories
@@ -34,6 +34,8 @@ def run_pipeline(gro_trr_pairs, output_dir, lammps_dir):
     Args:
         gro_trr_pairs (list of tuples): List of (gro_path, trr_path) input files
         output_dir (str): Where to store outputs
+        lammps_dir (str): Directory to write LAMMPS files
+        stride (int): Stride value for alignment
     """
     os.makedirs(output_dir, exist_ok=True)
 
@@ -44,8 +46,8 @@ def run_pipeline(gro_trr_pairs, output_dir, lammps_dir):
         struc_out = os.path.abspath(os.path.join(output_dir, f"struc_ave_{i}.pdb"))
         traj_out = os.path.abspath(os.path.join(output_dir, f"traj_sup_{i}.pdb"))
 
-        print(f"[{i}] Aligning {gro_path} and {trr_path}")
-        alignMDA(gro_path, trr_path, struc_out, traj_out)
+        print(f"[{i}] Aligning {gro_path} and {trr_path} with stride {stride}")
+        alignMDA(gro_path, trr_path, struc_out, traj_out, stride=stride)
 
         aligned_structs.append(struc_out)
         aligned_trajs.append(traj_out)
@@ -83,6 +85,12 @@ if __name__ == "__main__":
         required=True,
         help="Directory to write new files for LAMMPS simulation software"
     )
+    parser.add_argument(
+        "--stride",
+        type=int,
+        default=1,
+        help="Stride value for alignment (default: 1)"
+    )
 
     args = parser.parse_args()
 
@@ -101,15 +109,4 @@ if __name__ == "__main__":
     else:
         raise ValueError("You must specify either --inputs or --infile.")
 
-    run_pipeline(gro_trr_pairs, args.out, args.lammps)
-
-# python -m henm.pipeline \
-#     --infile input/martinifiles.txt \
-#     --out output/
-
-"""
-python -m henm.pipeline \
---infile input/martinifiles.txt \
---out output/
---lammps lammps/
-"""
+    run_pipeline(gro_trr_pairs, args.out, args.lammps, args.stride)
