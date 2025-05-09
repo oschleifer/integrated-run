@@ -48,9 +48,13 @@ bsub < scripts/refine.sh
 ## Components
 
 `gromacs`: scripts to run CG Martini simulations using GROMACS on an HPC system such as Lassen. 
+
 `lammps`: input files and scripts required to run UCG simulations in LAMMPS. 
+
 `scripts`: scripts used to run experiments with the hENM code.
+
 `figures`: code and data to reproduce figures from our manuscript.
+
 `henm`: source code for a Python package that uses CG simulation outputs to generate bond coefficients for the corresponding UCG model.
 
 ## Steps
@@ -60,32 +64,47 @@ The main component is the `henm` package.
 **Inputs:** The CG simulations will produce two main files - a GROMACS structure file (.gro) and trajectory file (.trr/.xtc). 
 
 ### 1. Alignment
+
 **Purpose**: Extracts only the protein from the CG trajectory and aligns it to remove rotational and translational motion, isolating intramolecular interactions. 
+
 **Scripts**: `align.py`
 
+
 ### 2. Parameter estimation
+
 **Purpose**: Use aligned trajectory to estimate the harmonic bond coefficients of the UCG model.
+
 **Scripts**: `estimate.py`
+
 This script calls two other Python scripts:
+
 `fluc_scripts/fluc-match-8f.py`: Refines the bond coefficients iteratively to match the desired interaction strength.
+
 `fluc_scripts/fluc-match-str-pdb.py`: Generates the final file containing the optimized bond coefficient data.
 
+
 These files are also necessary for this step, which involves short GROMACS simulations:
+
 `bin`: contains executables that efficiently prepare input files for GROMACS and their C source code.
 
 `input-files`: contains fixed files needed for estimation
+
 - `amino-acid-masses.txt`: the mass of each amino acid.
 - `aminoacids.dat`: a list of amino acids and other related molecules.
 - `ba.dat`: a mapping of each of the 320 amino acids in the RAS-RBDCRD protein complex to 40 UCG sites.
+
 - `ffcharmm27bon.itp`, `steep.mdp`: files needed to run GROMACS.
 
 **Outputs** for the ith input file:
+
 - `cgk_{i}.dat`: A four-column output file with first UCG site, second UCG site, equilibrium bond distance, and harmonic bond coefficient.
 - `cg1_{i}.xyz`: A four-column output file with a UCG site followed by its coordinates.
 - `mass_{i}.dat`: A two-column output file with a UCG site followed by its mass.
 
 ### 3. Averaging
+
 **Purpose**: If inputs from multiple CG trajectories were provided, average the results to obtain one set of parameters.
+
 **Scripts**: `average.py`
 
 **Outputs**
@@ -94,7 +113,9 @@ These files are also necessary for this step, which involves short GROMACS simul
 - `mass.dat`: This does not need to be averaged since the number of amino acids in each UCG site is fixed.
 
 ### 4. Writing LAMMPS input
+
 **Purpose**: Use the new positions and bond coefficients to write LAMMPS input file.
+
 **Scripts**: `write.py`
 
 **Outputs**
