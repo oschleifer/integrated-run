@@ -1,4 +1,4 @@
-# mini-MuMMI: Automatic refinement of intramolecular interactions
+# UCG-mini-MuMMI: Automatic refinement of intramolecular interactions
 
 ## Overview
 
