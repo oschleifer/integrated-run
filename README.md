@@ -80,26 +80,26 @@ These files are also necessary for this step, which involves short GROMACS simul
 - `ffcharmm27bon.itp`, `steep.mdp`: files needed to run GROMACS.
 
 **Outputs** for the ith input file:
-- cgk_{i}.dat: A four-column output file with first UCG site, second UCG site, equilibrium bond distance, and harmonic bond coefficient.
-- cg1_{i}.xyz: A four-column output file with a UCG site followed by its coordinates.
-- mass_{i}.dat: A two-column output file with a UCG site followed by its mass.
+- `cgk_{i}.dat`: A four-column output file with first UCG site, second UCG site, equilibrium bond distance, and harmonic bond coefficient.
+- `cg1_{i}.xyz`: A four-column output file with a UCG site followed by its coordinates.
+- `mass_{i}.dat`: A two-column output file with a UCG site followed by its mass.
 
 ### 3. Averaging
 **Purpose**: If inputs from multiple CG trajectories were provided, average the results to obtain one set of parameters.
 **Scripts**: `average.py`
 
 **Outputs**
-- cgk.dat
-- cg1.xyz
-- mass.dat: This does not need to be averaged since the number of amino acids in each UCG site is fixed.
+- `cgk.dat`
+- `cg1.xyz`
+- `mass.dat`: This does not need to be averaged since the number of amino acids in each UCG site is fixed.
 
 ### 4. Writing LAMMPS input
 **Purpose**: Use the new positions and bond coefficients to write LAMMPS input file.
 **Scripts**: `write.py`
 
 **Outputs**
-- lammpsdata.dat: input file for starting a new LAMMPS simulation.
-- lammpsbondcoeff.dat: writes a record of the bond coefficients.
+- `lammpsdata.dat`: input file for starting a new LAMMPS simulation.
+- `lammpsbondcoeff.dat`: writes a record of the bond coefficients.
 
 ## Acknowledgments
 
