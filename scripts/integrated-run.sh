@@ -3,12 +3,8 @@
 ##### Run GROMACS :) #####
 ##########################
 
-# TODO: change per user
-# cDir="/p/gpfs1/ipe1/integration"
-# cd $cDir
 cDir="gromacs"
 
-# bash ../run_four_gmx_jobs.sh
 # Simulation subdirectories -- rename them based on your folders
 sim1Dir="sim_1"
 sim2Dir="sim_2"
@@ -20,18 +16,23 @@ sim4Dir="sim_4"
 ## Outputs into the simulation folders
 bsub -nnodes 1 -W 60 -G cancer -q pbatch ${cDir}/run_gmx.sh 1 ${cDir}/${sim1Dir} ${cDir}/${sim2Dir} ${cDir}/${sim3Dir} ${cDir}/${sim4Dir}
 
-# this makes x1 node job (running x4 simulations) runs for 1h
 
 ##########################
 ##### (: Run hENM :) #####
 ##########################
 
-cd henm 
-# consider what input/output and location
-# GROMACS trajectory files will be in each simulation's subdirectory
+source ~/.mummi/config.mummi.sh
+source $MUMMI_APP/setup/setup.env.sh
+spack load /nxpxh42
+pip install .
 
-# Runs henm script
-bash run-henm.sh
+python -m henm.pipeline \
+    --inputs gromacs/sim_1/confout.gro gromacs/sim_1/traj_comp.xtc \
+             gromacs/sim_2/confout.gro gromacs/sim_2/traj_comp.xtc \
+             gromacs/sim_3/confout.gro gromacs/sim_3/traj_comp.xtc \
+             gromacs/sim_4/confout.gro gromacs/sim_4/traj_comp.xtc \
+    --out output/
+   --lammps lammps/
 
 ##########################
 ##### Run LAMMPS :) ######
@@ -39,5 +40,5 @@ bash run-henm.sh
 
 cd ../lammps
 
-# Runs the LAMMPS script
+# Runs LAMMPS simulations 
 bash run-lammps.sh

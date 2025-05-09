@@ -1,6 +1,12 @@
-# LLNL Clinic Project
+# mini-MuMMI: Automatic refinement of intramolecular interactions
 
-Automated run of ultra coarse-grained molecular dynamics.
+## Overview
+
+The goal of this project is to model proteins with harmonic bonds, refining harmonic bond constants based on data from finer-grained simulations (e.g., atomistic or coarse-grained Martini simulations). Specifically, we use this approach to refine interactions within ultra-coarse-grained (UCG) models of RAS proteins, using Martini coarse-grained (CG) trajectories as input. This is part of the mini-MuMMI project, designed to extend multiscale protein modeling workflows by enabling automatic refinement of intramolecular interactions.
+
+The `henm` Python package reimplements automatic refinement in Python, following the methodology described in [Lyman 2008](https://pmc.ncbi.nlm.nih.gov/articles/PMC2567941/) (Systematic Multiscale Parameterization of Heterogeneous Elastic Network Models of Proteins). The original Perl-based implementation is available [here](https://github.com/uchicago-voth/MSCG-models/tree/master/HIV_CASP1/extra_codes/henm).
+
+## Quick start
 
 To install `henm` as a package, run `pip install -e .`
 
@@ -33,34 +39,16 @@ gcc -o hetero-enm hetero-enm-src/heteroenm.c hetero-enm-src/smalloc.c -llapack -
 gcc -o mkgromax mkgromax-src/mkgromax.c mkgromax-src/smalloc.c
 ```
 
-Temporary Lassen instructions for clinic teammates (TBD remove from final README):
+To run this as a job on an HPC system such as Lassen:
 
 ```
-git clone git@github.com:oschleifer/integrated-run.git
-git switch -c rohan origin/rohan
-
-# recompile C code for lassen
-cd integrated-run/henm/bin
-gcc -o hetero-enm hetero-enm-src/heteroenm.c hetero-enm-src/smalloc.c -llapack -lblas -lm
-gcc -o mkgromax mkgromax-src/mkgromax.c mkgromax-src/smalloc.c
-
-# setup MuMMI Spack environment
-cd ../..
-source ~/.mummi/config.mummi.sh
-# may need to delete your outdated environment and reinstall everything
-rm -rf $MUMMI_ROOT/$MUMMI_VENV
-source $MUMMI_APP/setup/setup.env.sh
-
-# Load GROMACS and set evironment variables
-spack load /nxpxh42
-echo "Loaded GROMACS"
-command -v gmx
-
-# installing in editable mode (-e) doesn't work on Lassen
-pip install .
-
-# try to run stuff (replace with actual filepaths)
-python -m henm.pipeline --inputs input/example_1.gro input/example_1.trr \
-                        --out output/ \
-                        --lammps lammps/
+bsub < scripts/refine.sh
 ```
+
+## Components
+
+## Inputs
+
+## Outputs
+
+## Folder Structure
