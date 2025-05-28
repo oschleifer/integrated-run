@@ -8,7 +8,7 @@ The `henm` Python package reimplements automatic refinement in Python, following
 
 ## Quick start
 
-To install `henm` as a package, run `pip install -e .`
+To install `henm` as a package, run `pip install -e .` 
 
 This package automates processing CG Martini simulations to refine the parameters of UCG simulations.
 
