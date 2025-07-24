@@ -20,7 +20,7 @@ def parse_infile(infile_path):
         for line in infile:
             parts = line.strip().split(',')
             if len(parts) != 2:
-                raise ValueError(f"Invalid line in infile: {line.strip()}")
+               raise ValueError(f"Invalid line in infile, {line}, {len(parts)}")
             gro_trr_pairs.append((parts[0], parts[1]))
     return gro_trr_pairs
 

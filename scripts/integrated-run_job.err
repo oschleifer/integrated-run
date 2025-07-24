@@ -1,0 +1,16 @@
+(lassen35: Tue Jul 15 08:26:57 PDT 2025) --> $MUMMI_CONF was not set, defaulting to config in $HOME directory: /g/g10/subramanian8/.mummi/config.mummi.sh
+
+Lmod is automatically replacing "clang/ibm-16.0.6-cuda-11.2.0-gcc-8.3.1" with
+"gcc/11.2.1".
+
+
+Due to MODULEPATH changes, the following have been reloaded:
+  1) spectrum-mpi/rolling-release
+
+
+The following have been reloaded with a version change:
+  1) cuda/11.2.0 => cuda/11.6.1
+
+
+[notice] A new release of pip is available: 23.2.1 -> 25.1.1
+[notice] To update, run: pip install --upgrade pip

@@ -26,7 +26,6 @@ def alignMDA(ref_structure, traj_file, output_ave, output_traj, stride=50):
     atoms_mobile_kras_CYF_bb = mobile.select_atoms("index 250")
     transforms = [
         trans.center_in_box(atoms_mobile_kras_CYF_bb),
-        trans.translate([0, 0, 40]),
         trans.wrap(mobile.atoms)
     ]
     mobile.trajectory.add_transformations(*transforms)

@@ -26,7 +26,7 @@ def estimate(struc_ave_pdb, traj_sup_pdb, output_dir, run_id):
             "python3", "-m", "henm.fluc_scripts.fluc_match_str_pdb",
             os.path.abspath(struc_ave_pdb),
             os.path.abspath(traj_sup_pdb),
-            "ba.dat", "bondfile", "flucfile", "200", "1"
+            "ba.dat", "bondfile", "flucfile", "10000", "1"
         ],
         cwd=tmp_dir,  # Run inside tmp dir
         env={**os.environ, "PYTHONPATH": project_root},

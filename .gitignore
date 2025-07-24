@@ -1,6 +1,7 @@
 # Ignore (most) input/output files in the root directory
 input/
 output/
+out_files/
 
 # Random GROMACS files
 *.lock
@@ -19,6 +20,7 @@ __pycache__/
 *.pyo
 
 # Ignore hidden files and folders
+build/
 *egg-info/
 .DS_Store
 *.swp
@@ -27,4 +29,3 @@ __pycache__/
 lammps/ucg/*
 !lammps/ucg/*.in
 !lammps/ucg/*.dat
-

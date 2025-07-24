@@ -22,13 +22,11 @@ command -v gmx
 # installing henm package
 pip install .
 
-python -m henm.pipeline \
-    	--infile input/martinifiles_test.csv \
+python3 -m henm.pipeline \
+    	--infile input/partial_files/martinifiles_100.csv \
 	--out output/ \
-   	--lammps lammps/
+   	--lammps lammps/ \
+        -- stride 1
 
-echo "processed "$(wc -l input/martinifiles_test.csv)" files"
+echo "processed "$(wc -l input/partial_files/martinifiles_100.csv)" files"
 
-# how you run it: bsub < integrated-run.lsf
-
-# check status of the job: bjobs -X

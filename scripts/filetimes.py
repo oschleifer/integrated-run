@@ -8,10 +8,10 @@ partial_input_dir = "input/partial_files"
 os.makedirs(partial_input_dir, exist_ok=True)
 
 # Output timing file
-timing_file = "timings_pipeline.csv"
+timing_file = "new_timings_pipeline.csv"
 
 # Number of lines to test
-line_counts = [1, 5, 10, 15, 20, 25, 75]
+line_counts = [1, 5, 10, 15, 20, 25, 50, 75, 100]
 
 # Read all lines from full input
 with open(full_input_file, "r") as f:
